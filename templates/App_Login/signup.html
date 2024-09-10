@@ -5,6 +5,13 @@
 <style>
     .sign_up {
         width: 500px;
+        border: 1px solid #ccc;
+        padding: 20px;
+    }
+    .log_in {
+        width: 500px;
+        border: 1px solid #ccc;
+        padding: 40px;
     }
 </style>
 {% endblock %}
@@ -16,6 +23,12 @@
         {% csrf_token %}
         <button type="submit" style="width: 100%" class="btn btn-primary">Sign Up</button>
     </form>
+</div>
+<br>
+<br>
+<div class="log_in">
+    <p>Have an account? <a href="#">Login</a></p>
+    
 </div>
 </center>
 {% endblock %}
