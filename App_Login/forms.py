@@ -21,7 +21,7 @@ class CreateNewUser(UserCreationForm):
         fields = ('email', 'username', 'password1', 'password2')
 
 
-class EditProfile(forms.ModalForm):
+class EditProfile(forms.ModelForm):
     dob = forms.DateField(widget=forms.TextInput(attrs={'type': 'data',}))
     class Meta:
         model = UserProfile

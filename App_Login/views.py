@@ -27,16 +27,16 @@ def sign_up(request):
 
 
 def login_page(request):
-    form = AuthenticationForm()
+    form = AuthenticationForm() #request, data=request.POST request, data=request.POST
     if request.method == 'POST':
-        form = AuthenticationForm
+        form = AuthenticationForm(data=request.POST)#
         if form.is_valid():
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                pass
+                return HttpResponseRedirect(reverse('App_Posts:home'))
 
     return render(request, 'App_Login/login.html', context={'title': 'Login', 'form': form})        
     # return HttpResponseRedirect(reverse('App_Login:home'))
@@ -52,4 +52,9 @@ def edit_profile(request):
             form = EditProfile(isinstance=current_user)
             return HttpResponseRedirect(reverse('App_Login:profile'))
     return render(request, 'App_Login/profile.html', context={'form': form, 'title': 'Edit Profile . Social'})
+
+@login_required
+def logout_user(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('App_Login:login'))
 

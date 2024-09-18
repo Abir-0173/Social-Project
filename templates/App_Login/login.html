@@ -19,7 +19,7 @@
 {% block body_block %}
 <center>
 <div class="log_in">
-    <form action="POST">
+    <form method="POST">
         {{ form|crispy}}
         {% csrf_token%}
         <button type="submit" class="btn btn-primary">Log In</button>
