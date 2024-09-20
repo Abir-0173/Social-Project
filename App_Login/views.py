@@ -29,7 +29,7 @@ def sign_up(request):
 def login_page(request):
     form = AuthenticationForm() #request, data=request.POST request, data=request.POST
     if request.method == 'POST':
-        form = AuthenticationForm(data=request.POST)#
+        form = AuthenticationForm(data=request.POST)
         if form.is_valid():
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
@@ -44,17 +44,22 @@ def login_page(request):
 @login_required
 def edit_profile(request):
     current_user = UserProfile.objects.get(user=request.user)
-    form = EditProfile(isinstance=current_user)
+    form = EditProfile(instance=current_user)
     if request.method == 'POST':
         form = EditProfile(request.POST, request.FILES, instance=current_user)
         if form.is_valid():
             form.save(commit=True)
-            form = EditProfile(isinstance=current_user)
-            return HttpResponseRedirect(reverse('App_Login:profile'))
+            form = EditProfile(instance=current_user)
+            return HttpResponseRedirect(reverse('App_Login:profile')) # Redirect after saving
     return render(request, 'App_Login/profile.html', context={'form': form, 'title': 'Edit Profile . Social'})
 
 @login_required
 def logout_user(request):
     logout(request)
     return HttpResponseRedirect(reverse('App_Login:login'))
+
+@login_required
+def profile(request):
+    return render(request, 'App_Login/user.html', context={'title': 'User'})
+
 
