@@ -7,7 +7,18 @@
 </style>
 {% endblock %}
 {% block body_block %}
+{% if search %}
+    {% for user in result %}
+    <img src="/media/{{user.user_profile.profile_pic}}" width="50px" height="50px">
+    {{user.username}}
+    {{user.user_profile.full_name}}
+    <br>
+    {% endfor %}
+    
+    
+{% else  %}
+
+{% endif %}
 <center>
-    <h1>Home Page !</h1>
 </center>
 {% endblock %}
