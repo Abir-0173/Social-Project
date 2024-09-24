@@ -1,0 +1,53 @@
+{% extends "navbar.html" %} 
+{% load crispy_forms_tags %} 
+{% block title_block %} {{user_other.user_profile.full_name}} (@{{user_other.username}}) {% endblock %}
+{% block css_block %}
+<style>
+   .crop {
+    width: 200px;
+    height:200px;
+    overflow: hidden;
+    border: solid 1px;
+    margin: 5px;
+   }
+   .crop img {
+    width: 200px;
+    height: 200px;
+    {% comment %} margin: -75px 0 0 -100px; {% endcomment %}
+   }
+   .row{
+    padding: 40px;
+   }
+</style>
+{% endblock %}
+{% block body_block %}
+<center></center>
+    <div class="row">
+        <div class="col-sm-4">
+            {% if user_other.user_profile.profile_pic %}
+            <img src="/media/{{user_other.user_profile.profile_pic}}" alt="" width="250px" height="250px" class="rounded-circle">
+            {% else %}
+            <img src="/media/default.jpg" class="rounded-circle" width="250px" height="250px">
+            {% endif %}
+        </div>
+        <div class="col-sm-8">
+            <h2>{{user_other.username}} &nbsp;</h2>
+            <br>
+            <h4>{{user_other.post.count}} Posts &nbsp; &nbsp; {{user.following.count}} Followers &nbsp; &nbsp; {{user_other.follower.count}} Following </h4>
+            <br>
+            <h3> {{user_other.user_profile.full_name}} </h3>
+            <h6>{{user_other.user_profile.description|linebreaks}}</h6>
+        </div>
+    </div>
+    <hr>
+    <br>
+
+<div class="row">
+    {% for post in user_other.post.all %}
+     <div class="crop">
+        <img src ="/media/{{post.image}}" title ="{{post.caption}}">
+     </div>   
+    {% endfor %}       
+</div>
+
+{% endblock %}

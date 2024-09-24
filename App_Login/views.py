@@ -7,6 +7,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 
 from App_Posts.forms import PostForm
+from django.contrib.auth.models import User
 
 
 
@@ -72,4 +73,10 @@ def profile(request):
             return HttpResponseRedirect(reverse('home'))
     return render(request, 'App_Login/user.html', context={'title': 'User', 'form': form})
 
+@login_required
+def user(request, username):
+    user_other = User.objects.get(username=username)
+    if user_other == request.user:
+        return HttpResponseRedirect(reverse('App_Login:profile'))
+    return render(request, 'App_Login/user_other.html', context={'title': f'{user_other.username}', 'user_other': user_other})
 
