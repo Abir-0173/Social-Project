@@ -34,16 +34,25 @@
  {% comment %} {% for author in following_list %} {% endcomment %}
     {% comment %} {% for post in author.following.post.all %} {% endcomment %}
     {% for post in postss %}
-    <div style="border: solid #888888;">
+    <div style="border: solid #dbdbdb;">
         <div style="padding: 10px;">
         {% if post.author.user_profile.profile_pic %}
-            <img src="/media/{{user.user_profile.profile_pic}}" alt="" width="40px" height="70px" class="rounded-circle">
+            <img src="/media/{{user.user_profile.profile_pic}}" alt="" width="40px" height="40px" class="rounded-circle">
         {% else %}
-            <img src="/media/default.jpg" class="rounded-circle" width="40px" height="70px">
+            <img src="/media/default.jpg" class="rounded-circle" width="40px" height="40px">
         {% endif %}
         <a href="{% url 'App_Login:user' username=post.author %}">{{post.author}}</a>
         </div>
         <img src="/media/{{post.image}}" width="100%">
+        <div style="padding: 20px">
+            {{post.caption}} <br>
+            {{ post.liked_posts.count }} <span>Like</span> <br>
+            {% if post.pk in liked_post_list %}
+            <a href="{% url 'App_Posts:unliked' pk=post.pk %}"><i class="fa fa-heart" style="font-size: 36px;"></i></a>
+            {% else %}  
+            <a href="{% url 'App_Posts:liked' pk=post.pk %}"><i class="fa fa-heart-o" style="font-size: 36px;"></i></a>
+            {% endif %}
+        </div>
     </div>
     <br>
     <br>
