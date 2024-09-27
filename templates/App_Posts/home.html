@@ -3,16 +3,20 @@
 {% block title_block %} {{title}} {% endblock %}
 {% block css_block %}
 <style>
-   .container{
+   .row{
     padding: 10px;
+    {% comment %} border: solid 1px #dfdfdf; {% endcomment %}
+   }
+   .col-sm-10{
+    align-content: center;
    }
 </style>
 {% endblock %}
 {% block body_block %}
 {% if search %}
     {% for user in result %}
-    <div class="row">
-        <div class="col-sm-2 container">
+    <div class="row container">
+        <div class="col-sm-2 ">
             {% if user.user_profile.profile_pic %}
             <img src="/media/{{user.user_profile.profile_pic}}" alt="" width="70px" height="70px" class="rounded-circle">
             {% else %}
@@ -26,6 +30,7 @@
             {{user.user_profile.full_name}}
         </div>
     </div>
+    <hr>
     {% endfor %}
 {% else %}
 
@@ -36,11 +41,11 @@
     {% for post in postss %}
     <div style="border: solid #dbdbdb;">
         <div style="padding: 10px;">
-        {% if post.author.user_profile.profile_pic %}
-            <img src="/media/{{user.user_profile.profile_pic}}" alt="" width="40px" height="40px" class="rounded-circle">
-        {% else %}
+            {% if post.author.user_profile.profile_pic %}
+            <img style="border: solid #000;" src="/media/{{post.author.user_profile.profile_pic}}" alt="" width="45px" height="45px" class="rounded-circle">
+            {% else %}
             <img src="/media/default.jpg" class="rounded-circle" width="40px" height="40px">
-        {% endif %}
+            {% endif %}
         <a href="{% url 'App_Login:user' username=post.author %}">{{post.author}}</a>
         </div>
         <img src="/media/{{post.image}}" width="100%">
